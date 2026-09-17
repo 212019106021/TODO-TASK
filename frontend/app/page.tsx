@@ -10,10 +10,7 @@ interface Todo {
 }
 
 const api = axios.create({
-  baseURL:
-    typeof window !== 'undefined'
-      ? `${window.location.protocol}//${window.location.hostname}:8000`
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json',
   },
