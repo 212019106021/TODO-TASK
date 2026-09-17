@@ -1,3 +1,5 @@
+import os
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -6,15 +8,22 @@ from . import database, models, schemas
 
 app = FastAPI(title="Todo API")
 
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:3001").split(",")
+    if origin.strip()
+]
+
 
 @app.on_event("startup")
 def on_startup():
     database.wait_for_db()
+    print("ggjh")
     models.Base.metadata.create_all(bind=database.engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -14,8 +14,11 @@ A simple full-stack Todo List application built with Next.js 15, TypeScript, Tai
 Make sure Docker is installed, then run:
 
 ```bash
+copy .env.example .env
 docker compose up --build
 ```
+
+Update the values in `.env` before starting the services if you need different database, pgAdmin, or API settings. The local `.env` file is ignored by Git; use `.env.example` as the committed template.
 
 The frontend will be available at `http://localhost:3000` and the backend API at `http://localhost:8000`.
 
