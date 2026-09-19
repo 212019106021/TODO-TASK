@@ -20,7 +20,19 @@ docker compose up --build
 
 Update the values in `.env` before starting the services if you need different database, pgAdmin, or API settings. The local `.env` file is ignored by Git; use `.env.example` as the committed template.
 
-The frontend will be available at `http://localhost:3000` and the backend API at `http://localhost:8000`.
+The local Compose frontend is available at `http://localhost:3001`. The backend is bound to `127.0.0.1:8000` for the host reverse proxy and is not published publicly.
+
+## Production deployment
+
+The production frontend calls `https://deployment-test-api.deepsense.dev` using `NEXT_PUBLIC_API_URL`. Install the Nginx files from `deploy/nginx/` into `/etc/nginx/sites-available/`, create symlinks in `/etc/nginx/sites-enabled/`, and provision certificates for both domains with Certbot before reloading Nginx.
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+docker compose up -d --build
+```
+
+The Nginx host proxies the frontend to `127.0.0.1:3001` and the API to `127.0.0.1:8000`. PostgreSQL and pgAdmin remain available only on the Docker network.
 
 ## Backend API
 

@@ -10,7 +10,10 @@ app = FastAPI(title="Todo API")
 
 CORS_ORIGINS = [
     origin.strip()
-    for origin in os.getenv("CORS_ORIGINS", "http://localhost:3001").split(",")
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "https://deployment-test.deepsense.dev,http://localhost:3001",
+    ).split(",")
     if origin.strip()
 ]
 
